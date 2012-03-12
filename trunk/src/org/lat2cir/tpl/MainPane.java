@@ -1,11 +1,20 @@
 package org.lat2cir.tpl;
 
+import org.lat2cir.Boot;
+import org.lat2cir.tpl.Dialog.DialogEnum;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -33,6 +42,45 @@ public class MainPane extends VBox {
     }
 
 	private void initCompoments() {
+		
+		//Menu
+		MenuBar menuBar = new MenuBar();
+		
+		//File menu - import, export,print, exit
+		Menu FileMenu = new Menu("File");
+		FileMenu.getItems().add(new MenuItem("Import"));
+		FileMenu.getItems().add(new MenuItem("Export"));
+		FileMenu.getItems().add(new SeparatorMenuItem());
+		FileMenu.getItems().add(new MenuItem("Print"));
+		FileMenu.getItems().add(new SeparatorMenuItem());
+		FileMenu.getItems().add(new MenuItem("Exit"));
+			
+		// Adding File menu to MenuBar
+		menuBar.getMenus().add(FileMenu);
+		
+		
+		//Edit menu - copy, paste, clear
+		Menu EditMenu = new Menu("Edit");
+		EditMenu.getItems().add(new MenuItem("Copy"));
+		EditMenu.getItems().add(new MenuItem("Paste"));
+		EditMenu.getItems().add(new MenuItem("Clear"));
+		
+		// Adding Edit menu to MenuBar
+		menuBar.getMenus().add(EditMenu);
+		
+		
+		//Edit menu - About
+		Menu HelpMenu = new Menu("Help");
+		HelpMenu.getItems().add(new MenuItem("About"));
+				
+		// Adding Edit menu to MenuBar
+		menuBar.getMenus().add(HelpMenu);
+		
+		//Adding MenuBar to VBox
+		this.getChildren().add(menuBar);
+		
+		this.prefWidthProperty().bind(Boot.primaryStage.widthProperty());
+		
 		this.setPadding(new Insets(10));
 		this.setStyle("-fx-background-color: #f1f1f1;");
 
@@ -88,7 +136,17 @@ public class MainPane extends VBox {
 		GridPane.setMargin(convertType, new Insets(0, 5, 0, 0));
 
 		this.getChildren().add(bottomPane);
-
+		
+		convertBtn.setOnAction(new EventHandler<ActionEvent>() {
+			 
+			public void handle(ActionEvent event) {
+				
+				Dialog dlg = new Dialog(DialogEnum.INFO, "This is information message!", "Information");
+				dlg.State();
+			 
+			}
+			});
+		
 	}
 
 }
