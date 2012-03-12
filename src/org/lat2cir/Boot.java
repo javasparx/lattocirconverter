@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  */
 public class Boot extends Application {
 
-    private Stage primaryStage = null;
+    public static Stage primaryStage = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -32,6 +32,7 @@ public class Boot extends Application {
     private void initPrimaryScene() {
         this.primaryStage.setTitle("Lat2Cir Converter");
         this.primaryStage.setResizable(true);
+        
     }
 
 }
