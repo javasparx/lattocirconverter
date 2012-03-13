@@ -36,46 +36,12 @@ public class MainPane extends VBox {
 	private ChoiceBox<String> convertType = new ChoiceBox<String>();
 
 	public MainPane() {
+		initMenu();
 		initCompoments();
+		
 	}
 
 	private void initCompoments() {
-
-		//Menu
-		MenuBar menuBar = new MenuBar();
-
-		//File menu - import, export,print, exit
-		Menu FileMenu = new Menu("File");
-		FileMenu.getItems().add(new MenuItem("Import"));
-		FileMenu.getItems().add(new MenuItem("Export"));
-		FileMenu.getItems().add(new SeparatorMenuItem());
-		FileMenu.getItems().add(new MenuItem("Print"));
-		FileMenu.getItems().add(new SeparatorMenuItem());
-		FileMenu.getItems().add(new MenuItem("Exit"));
-
-		// Adding File menu to MenuBar
-		menuBar.getMenus().add(FileMenu);
-
-
-		//Edit menu - copy, paste, clear
-		Menu EditMenu = new Menu("Edit");
-		EditMenu.getItems().add(new MenuItem("Copy"));
-		EditMenu.getItems().add(new MenuItem("Paste"));
-		EditMenu.getItems().add(new MenuItem("Clear"));
-
-		// Adding Edit menu to MenuBar
-		menuBar.getMenus().add(EditMenu);
-
-
-		//Edit menu - About
-		Menu HelpMenu = new Menu("Help");
-		HelpMenu.getItems().add(new MenuItem("About"));
-
-		// Adding Edit menu to MenuBar
-		menuBar.getMenus().add(HelpMenu);
-
-		//Adding MenuBar to VBox
-		this.getChildren().add(menuBar);
 
 		this.setStyle("-fx-background-color: #f1f1f1;");
 
@@ -121,7 +87,8 @@ public class MainPane extends VBox {
 		bottomPane.add(progressBar, 0, 0);
 		bottomPane.add(convertType, 1, 0);
 		bottomPane.add(convertBtn, 2, 0);
-
+		
+		
 		GridPane.setHgrow(convertType, Priority.ALWAYS);
 		GridPane.setHalignment(convertType, HPos.RIGHT);
 
@@ -139,6 +106,44 @@ public class MainPane extends VBox {
 			}
 		});
 
+	}
+	
+	private void initMenu() {
+		//Menu
+		MenuBar menuBar = new MenuBar();
+
+		//File menu - import, export,print, exit
+		Menu FileMenu = new Menu("File");
+		FileMenu.getItems().add(new MenuItem("Import"));
+		FileMenu.getItems().add(new MenuItem("Export"));
+		FileMenu.getItems().add(new SeparatorMenuItem());
+		FileMenu.getItems().add(new MenuItem("Print"));
+		FileMenu.getItems().add(new SeparatorMenuItem());
+		FileMenu.getItems().add(new MenuItem("Exit"));
+
+		// Adding File menu to MenuBar
+		menuBar.getMenus().add(FileMenu);
+
+
+		//Edit menu - copy, paste, clear
+		Menu EditMenu = new Menu("Edit");
+		EditMenu.getItems().add(new MenuItem("Copy"));
+		EditMenu.getItems().add(new MenuItem("Paste"));
+		EditMenu.getItems().add(new MenuItem("Clear"));
+
+		// Adding Edit menu to MenuBar
+		menuBar.getMenus().add(EditMenu);
+
+
+		//Edit menu - About
+		Menu HelpMenu = new Menu("Help");
+		HelpMenu.getItems().add(new MenuItem("About"));
+
+		// Adding Edit menu to MenuBar
+		menuBar.getMenus().add(HelpMenu);
+
+		//Adding MenuBar to VBox
+		this.getChildren().add(menuBar);
 	}
 
 }
