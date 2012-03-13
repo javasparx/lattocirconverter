@@ -1,8 +1,14 @@
 package org.lat2cir.tpl;
 
 import java.util.HashMap;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,14 +39,27 @@ public class MessageBox extends Stage {
 		// components
 		GridPane gridPane = new GridPane();
 		gridPane.setPadding(new Insets(7));
+		gridPane.setHgap(5);
+		gridPane.setVgap(5);
 
+		Button okBtn = new Button("Ok");
 		Label msgLbl = new Label(message);
 		Image icon = new Image(MessageBox.class.getResourceAsStream(iconsList.get(type)));
 		ImageView imgView = new ImageView(icon);
 		GridPane.setConstraints(imgView, 0, 0);
 		gridPane.add(imgView, 0, 0);
 		gridPane.add(msgLbl, 1, 0);
-
+		gridPane.add(okBtn, 1, 1);
+		GridPane.setHalignment(okBtn, HPos.RIGHT);
+		okBtn.setPrefSize(75, 20);
+		
+		okBtn.setOnAction(new EventHandler<ActionEvent>() {
+			 
+				public void handle(ActionEvent event) {
+					_instance.close();
+				}
+				});
+		
 
 		// init scene
 		Scene sc = new Scene(gridPane);
