@@ -10,16 +10,24 @@ import javafx.stage.Stage;
  */
 public class Boot extends Application {
 
-    private Stage primaryStage = null;
+    private static Stage primaryStage = null;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public static Stage getStage(){
+    	return primaryStage;
+    }
+
+    private static void setStage(Stage stage){
+    	primaryStage = stage;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         // init primaryScene
-        this.primaryStage = primaryStage;
+        setStage(primaryStage);
         initPrimaryScene();
 
         primaryStage.setScene(new Scene(new MainPane(), 600, 400));
@@ -27,8 +35,8 @@ public class Boot extends Application {
     }
 
     private void initPrimaryScene() {
-        this.primaryStage.setTitle("Lat2Cir Converter");
-        this.primaryStage.setResizable(true);
+        Boot.primaryStage.setTitle("Lat2Cyr Converter");
+        Boot.primaryStage.setResizable(true);
     }
 
 }

@@ -69,7 +69,6 @@ public class MessageBox extends Stage {
 
 		// init scene
 		Scene sc = new Scene(gridPane);
-		_instance.setWidth(400);
 		_instance.setScene(sc);
 
 		if(!isCreated)
