@@ -1,10 +1,16 @@
 package org.lat2cyr.tpl;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import org.lat2cyr.Boot;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -17,6 +23,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * @author zeljic
@@ -25,7 +33,7 @@ import javafx.scene.layout.VBox;
 public class MainPane extends VBox {
 
 	private Label latLbl = new Label("Latin Text");
-	private Label cyrLbl = new Label("Cirylic Text");
+	private Label cyrLbl = new Label("Cyrillic Text");
 	private TextArea latTx = new TextArea();
 	private TextArea cyrTx = new TextArea();
 	private GridPane bottomPane = new GridPane();
@@ -35,6 +43,7 @@ public class MainPane extends VBox {
 	private String txStyle = "-fx-font: 12 monospace; " +
 						"-fx-padding: 2;";
 	private ChoiceBox<String> convertType = new ChoiceBox<String>();
+	private FileChooser fileDialog = new FileChooser();
 
 	public MainPane() {
 		initMenu();
@@ -82,7 +91,7 @@ public class MainPane extends VBox {
 		progressBar.setDisable(true);
 
 		// convert type combobox
-		convertType.getItems().addAll("Latin to Cyrilic", "Cyrilic to Latin");
+		convertType.getItems().addAll("Latin to Cyrillic", "Cyrillic to Latin");
 		convertType.getSelectionModel().select(0);
 
 		// bottom pane
@@ -106,7 +115,7 @@ public class MainPane extends VBox {
 
 		convertBtn.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				MessageBox.show(MessageBoxType.ERROR, "Error", "This is my custom error message! And this message can be must more larger and bigger!All other strings need to be more flexible!");
+
 			}
 		});
 
@@ -117,26 +126,60 @@ public class MainPane extends VBox {
 		MenuBar menuBar = new MenuBar();
 
 		//File menu - import, export,print, exit
-		Menu FileMenu = new Menu("File");
-		FileMenu.getItems().add(new MenuItem("Import"));
-		FileMenu.getItems().add(new MenuItem("Export"));
-		FileMenu.getItems().add(new SeparatorMenuItem());
-		FileMenu.getItems().add(new MenuItem("Print"));
-		FileMenu.getItems().add(new SeparatorMenuItem());
-		FileMenu.getItems().add(new MenuItem("Exit"));
+		Menu fileMn = new Menu("File");
+
+		// file open menu
+		Menu openMn = new Menu("Open");
+		MenuItem fromLatin = new MenuItem("From Latin Source");
+		fromLatin.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				openFile(latTx);
+			}
+		});
+		MenuItem fromCyrilic = new MenuItem("From Cyrillic Source");
+		fromCyrilic.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				openFile(cyrTx);
+				cyrLbl.setText("Cyrillic Text (" + cyrTx.getText().length() + " chars)");
+			}
+		});
+
+		openMn.getItems().addAll(fromLatin, fromCyrilic);
+
+		// file save menu
+		Menu saveMn = new Menu("Save As");
+		MenuItem fromLatinSave = new MenuItem("From Latin Source");
+		fromLatin.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+			}
+		});
+		MenuItem fromCyrilicSave = new MenuItem("From Cyrillic Source");
+		fromCyrilic.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+			}
+		});
+
+		saveMn.getItems().addAll(fromLatinSave, fromCyrilicSave);
+
+		MenuItem exitMn = new MenuItem("Exit");
+		exitMn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				Boot.getStage().close();
+			}
+		});
+
+		// add all menu items
+		fileMn.getItems().addAll(openMn, saveMn, new SeparatorMenuItem(), exitMn);
 
 		// Adding File menu to MenuBar
-		menuBar.getMenus().add(FileMenu);
-
-
-		//Edit menu - copy, paste, clear
-		Menu EditMenu = new Menu("Edit");
-		EditMenu.getItems().add(new MenuItem("Copy"));
-		EditMenu.getItems().add(new MenuItem("Paste"));
-		EditMenu.getItems().add(new MenuItem("Clear"));
-
-		// Adding Edit menu to MenuBar
-		menuBar.getMenus().add(EditMenu);
+		menuBar.getMenus().add(fileMn);
 
 
 		//Edit menu - About
@@ -148,6 +191,36 @@ public class MainPane extends VBox {
 
 		//Adding MenuBar to VBox
 		this.getChildren().add(menuBar);
+	}
+
+	private void openFile(Node tx){
+		ExtensionFilter extFilter = new ExtensionFilter("All Text File", "*.txt");
+		fileDialog.getExtensionFilters().add(extFilter);
+		File _f = fileDialog.showOpenDialog( Boot.getStage().getScene().getWindow() );
+		if(_f != null)
+		{
+
+			TextArea _tx = (TextArea) tx;
+			_tx.clear();
+
+			try {
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(_f), "utf-8"));
+
+				String line = null;
+				String _all = "";
+
+				while((line = br.readLine()) != null)
+		            _all += line;
+
+				_tx.setText(_all);
+
+		        br.close();
+
+			} catch (Exception ex) {
+				MessageBox.show(MessageBoxType.ERROR, "Error", "Error while reading selected file.");
+				ex.printStackTrace();
+			}
+		}
 	}
 
 }
