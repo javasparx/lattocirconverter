@@ -25,8 +25,7 @@ public class MessageBox extends Stage {
 
 	private static HashMap<MessageBoxType, String> iconsList = new HashMap<MessageBoxType, String>();
 
-	private MessageBox() {
-	}
+	private MessageBox() { }
 
 	private static MessageBox _get_instance() {
 		// set icons

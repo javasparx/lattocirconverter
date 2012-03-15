@@ -1,12 +1,10 @@
 package org.lat2cyr.tpl;
 
-import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import org.lat2cyr.Boot;
-import org.lat2cyr.I18N;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,14 +31,15 @@ import javafx.stage.FileChooser.ExtensionFilter;
  * @date Mar 11, 2012 - 1:26:48 AM
  */
 public class MainPane extends VBox {
-	
+
+	private static MainPane _instance = null;
 	private Label latLbl = new Label("Latin Text");
 	private Label cyrLbl = new Label("Cyrillic Text");
 	private TextArea latTx = new TextArea();
 	private TextArea cyrTx = new TextArea();
 	private GridPane bottomPane = new GridPane();
 	private VBox wrapBox = new VBox();
-	private Button convertBtn = new Button(I18N.localize("Convert"));
+	private Button convertBtn = new Button("Convert");
 	private ProgressBar progressBar = new ProgressBar();
 	private String txStyle = "-fx-font: 12 monospace; " +
 						"-fx-padding: 2;";
@@ -50,6 +49,11 @@ public class MainPane extends VBox {
 	public MainPane() {
 		initMenu();
 		initCompoments();
+		_instance = this;
+	}
+
+	public static MainPane getInstance(){
+		return _instance;
 	}
 
 	private void initCompoments() {
@@ -182,19 +186,27 @@ public class MainPane extends VBox {
 
 		// Adding File menu to MenuBar
 		menuBar.getMenus().add(fileMn);
-		
+
+		// options menu
+		MenuItem optionsMn = new MenuItem("Options");
+		optionsMn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				new Options().open();
+			}
+		});
+
 		//Edit menu - About
 		Menu HelpMenu = new Menu("Help");
-		MenuItem about = new MenuItem("About");
-		about.setOnAction(new EventHandler<ActionEvent>() {
+		MenuItem aboutMn = new MenuItem("About");
+		aboutMn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
 				AboutDialog ad = new AboutDialog();
 				ad.open();
 			}
 		});
-		HelpMenu.getItems().add(about);
+		HelpMenu.getItems().addAll(optionsMn, new SeparatorMenuItem(), aboutMn);
 
 		// Adding Edit menu to MenuBar
 		menuBar.getMenus().add(HelpMenu);
@@ -231,6 +243,10 @@ public class MainPane extends VBox {
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	public void doLayoutLanguage(){
+
 	}
 
 }
