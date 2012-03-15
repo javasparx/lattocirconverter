@@ -36,8 +36,11 @@ public class I18n {
 		try{
 			while((line = br.readLine()) != null)
 			{
-				String[] ar = line.split("=");
-				pairs.put(ar[0], ar[1]);
+				if (!line.startsWith("#") && line.length() > 0 && line.contains("="))
+				{
+					String[] ar = line.split("[ ]*=[ ]*");
+					pairs.put(ar[0], ar[1]);
+				}
 			}
 		}catch (Exception e) {}
 

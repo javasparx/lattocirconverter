@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import org.lat2cyr.Boot;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
+import org.lat2cyr.utils.I18n;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -132,38 +134,37 @@ public class MainPane extends VBox {
 		MenuBar menuBar = new MenuBar();
 
 		//File menu - import, export,print, exit
-		Menu fileMn = new Menu("File");
+		Menu fileMn = new Menu(I18n.localize("File"));
 
 		// file open menu
-		Menu openMn = new Menu("Open");
-		MenuItem fromLatin = new MenuItem("From Latin Source");
+		Menu openMn = new Menu(I18n.localize("Open"));
+		MenuItem fromLatin = new MenuItem(I18n.localize("From Latin Source"));
 		fromLatin.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				openFile(latTx);
 			}
 		});
-		MenuItem fromCyrilic = new MenuItem("From Cyrillic Source");
+		MenuItem fromCyrilic = new MenuItem(I18n.localize("From Cyrillic Source"));
 		fromCyrilic.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				openFile(cyrTx);
-				cyrLbl.setText("Cyrillic Text (" + cyrTx.getText().length() + " chars)");
 			}
 		});
 
 		openMn.getItems().addAll(fromLatin, fromCyrilic);
 
 		// file save menu
-		Menu saveMn = new Menu("Save As");
-		MenuItem fromLatinSave = new MenuItem("From Latin Source");
+		Menu saveMn = new Menu(I18n.localize("Save"));
+		MenuItem fromLatinSave = new MenuItem(I18n.localize("as Latin"));
 		fromLatin.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 
 			}
 		});
-		MenuItem fromCyrilicSave = new MenuItem("From Cyrillic Source");
+		MenuItem fromCyrilicSave = new MenuItem(I18n.localize("as Cyrillic"));
 		fromCyrilic.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -173,7 +174,7 @@ public class MainPane extends VBox {
 
 		saveMn.getItems().addAll(fromLatinSave, fromCyrilicSave);
 
-		MenuItem exitMn = new MenuItem("Exit");
+		MenuItem exitMn = new MenuItem(I18n.localize("Exit"));
 		exitMn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -188,7 +189,7 @@ public class MainPane extends VBox {
 		menuBar.getMenus().add(fileMn);
 
 		// options menu
-		MenuItem optionsMn = new MenuItem("Options");
+		MenuItem optionsMn = new MenuItem(I18n.localize("Options"));
 		optionsMn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -197,8 +198,8 @@ public class MainPane extends VBox {
 		});
 
 		//Edit menu - About
-		Menu HelpMenu = new Menu("Help");
-		MenuItem aboutMn = new MenuItem("About");
+		Menu HelpMenu = new Menu(I18n.localize("Help"));
+		MenuItem aboutMn = new MenuItem(I18n.localize("About"));
 		aboutMn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
