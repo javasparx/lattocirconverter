@@ -138,8 +138,6 @@ public class Options extends Stage{
 
 		I18n.langReselected = true;
 
-		MainPane.getInstance().doLayoutLanguage();
-
 		this.close();
 		return true;
 	}
