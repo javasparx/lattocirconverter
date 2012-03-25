@@ -1,6 +1,6 @@
 package org.lat2cyr.tpl.tabs;
 
-import org.lat2cyr.tpl.toolbars.LatinToolbar;
+import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.Converter;
 import org.lat2cyr.utils.Converter.ConvertType;
 import org.lat2cyr.utils.I18n;
@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 
 public class Lat2CyrTab extends Tab {
 
-	private LatinToolbar toolbar = new LatinToolbar();
+	private TabToolbar toolbar = new TabToolbar();
 	private VBox wrap = new VBox();
 	private VBox pane = new VBox();
 	private Label sourceLbl = new Label();
@@ -41,7 +41,7 @@ public class Lat2CyrTab extends Tab {
 		VBox.setMargin(pane, new Insets(10));
 		VBox.setVgrow(pane, Priority.ALWAYS);
 		VBox.setVgrow(wrap, Priority.ALWAYS);
-		wrap.getChildren().addAll(pane, toolbar);
+		wrap.getChildren().addAll(toolbar, pane);
 
 		// source label
 		sourceLbl.setText(I18n.localize("Latin"));
@@ -77,7 +77,7 @@ public class Lat2CyrTab extends Tab {
 			}
 		});
 
-		toolbar.copyLatinBtn.onActionProperty().set(new EventHandler<ActionEvent>() {
+		toolbar.copySourceBtn.onActionProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent ae) {
 				ClipboardContent cc = new ClipboardContent();
@@ -87,7 +87,7 @@ public class Lat2CyrTab extends Tab {
 			}
 		});
 
-		toolbar.copyCyrillicBtn.onActionProperty().set(new EventHandler<ActionEvent>() {
+		toolbar.copyConvertBtn.onActionProperty().set(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent ae) {
 				ClipboardContent cc = new ClipboardContent();
