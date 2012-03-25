@@ -1,41 +1,59 @@
 package org.lat2cyr.tpl.toolbars;
 
 import org.lat2cyr.utils.I18n;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
+import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class LatinToolbar extends ToolBar {
 
-	private Button importBtn = new Button(I18n.localize("Import"));
-	private Button exportBtn = new Button(I18n.localize("Export"));
-	private Button convertBtn = new Button("Convert");
+	public Button importBtn = null;
+	public Button exportBtn = null;
+	public Button pasteBtn = null;
+	public Button copyLatinBtn = null;
+	public Button copyCyrillicBtn = null;
+	public Button convertBtn = null;
 
 	public LatinToolbar() {
 
 		initComponents();
 
-		this.getItems().addAll(importBtn ,exportBtn, convertBtn);
+		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copyLatinBtn, copyCyrillicBtn, convertBtn);
 	}
 
 	private void initComponents() {
 
-		// import button
-		importBtn.setText(I18n.localize("Import"));
-//		importBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/import.png"))));
+		importBtn = ButtonBuilder.create()
+				.text(I18n.localize("Import"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/import.png"))))
+				.build();
 
-		// export button
-		exportBtn.setText(I18n.localize("Export"));
-//		exportBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/export.png"))));
+		exportBtn = ButtonBuilder.create()
+				.text(I18n.localize("Export"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/export.png"))))
+				.build();
 
-		// convert button
-		convertBtn.setText(I18n.localize("Convert"));
-//		convertBtn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/convert.png"))));
+		pasteBtn = ButtonBuilder.create()
+				.text(I18n.localize("Paste"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/paste.png"))))
+				.build();
+
+		copyLatinBtn = ButtonBuilder.create()
+				.text(I18n.localize("Copy Latin"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/copy.png"))))
+				.build();
+
+		copyCyrillicBtn = ButtonBuilder.create()
+				.text(I18n.localize("Copy Cyrillic"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/copy.png"))))
+				.build();
+
+		convertBtn = ButtonBuilder.create()
+				.text(I18n.localize("Convert"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/convert.png"))))
+				.build();
 
 	}
 
