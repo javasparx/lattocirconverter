@@ -7,20 +7,20 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class LatinToolbar extends ToolBar {
+public class TabToolbar extends ToolBar {
 
 	public Button importBtn = null;
 	public Button exportBtn = null;
 	public Button pasteBtn = null;
-	public Button copyLatinBtn = null;
-	public Button copyCyrillicBtn = null;
+	public Button copySourceBtn = null;
+	public Button copyConvertBtn = null;
 	public Button convertBtn = null;
 
-	public LatinToolbar() {
+	public TabToolbar() {
 
 		initComponents();
 
-		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copyLatinBtn, copyCyrillicBtn, convertBtn);
+		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copySourceBtn, copyConvertBtn, convertBtn);
 	}
 
 	private void initComponents() {
@@ -40,12 +40,12 @@ public class LatinToolbar extends ToolBar {
 				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/paste.png"))))
 				.build();
 
-		copyLatinBtn = ButtonBuilder.create()
+		copySourceBtn = ButtonBuilder.create()
 				.text(I18n.localize("Copy Latin"))
 				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/copy.png"))))
 				.build();
 
-		copyCyrillicBtn = ButtonBuilder.create()
+		copyConvertBtn = ButtonBuilder.create()
 				.text(I18n.localize("Copy Cyrillic"))
 				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/copy.png"))))
 				.build();

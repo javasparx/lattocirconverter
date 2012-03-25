@@ -2,6 +2,8 @@ package org.lat2cyr.tpl;
 
 import org.lat2cyr.tpl.tabs.Cyr2LatTab;
 import org.lat2cyr.tpl.tabs.Lat2CyrTab;
+
+import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -19,6 +21,7 @@ public class MainPane extends VBox {
 	public MainPane() {
 
 		// tabpan
+		tabPane.setSide(Side.BOTTOM);
 		tabPane.getTabs().addAll(lat2CyrTab, cyr2LatTab);
 		tabPane.tabClosingPolicyProperty().set(TabClosingPolicy.UNAVAILABLE);
 
