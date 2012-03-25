@@ -1,5 +1,12 @@
 package org.lat2cyr.tpl.tabs;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import org.lat2cyr.Boot;
+import org.lat2cyr.tpl.MessageBox;
+import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.Converter;
 import org.lat2cyr.utils.Converter.ConvertType;
@@ -14,6 +21,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooserBuilder;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Cyr2LatTab extends Tab {
 
@@ -102,6 +112,96 @@ public class Cyr2LatTab extends Tab {
 			public void handle(ActionEvent ae) {
 				convertTx.setText(converter.convertText(sourceTx.getText(), ConvertType.CYR2LAT));
 				convertTx.setScrollTop(sourceTx.getScrollTop());
+			}
+		});
+
+		toolbar.importBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent ae) {
+				FileChooser importChooser = FileChooserBuilder.create()
+						.title(I18n.localize("Import textual file"))
+						.build();
+
+				importChooser.getExtensionFilters().add(new ExtensionFilter(I18n.localize("Textual file"), "*.txt"));
+
+				File importFile = importChooser.showOpenDialog(Boot.getStage());
+
+				if(importFile == null)
+					return;
+
+				if(importFile.exists() && importFile.canRead()){
+
+					BufferedReader br = null;
+
+					try {
+						br = new BufferedReader(new FileReader(importFile));
+						String line = null;
+						String text = "";
+
+						while((line = br.readLine()) != null)
+							text = text.concat(line).concat(System.getProperty("line.separator"));
+
+						sourceTx.setText(text.trim());
+
+					} catch (Exception e) {
+						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while reading content from selected file"));
+					} finally{
+						if(br != null)
+							try {
+								br.close();
+							} catch (Exception e) {}
+					}
+
+				}else
+					MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't read selected file"));
+
+			}
+		});
+
+		toolbar.exportBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent ae) {
+
+				if(convertTx.getText().length() == 0)
+					return;
+
+				FileChooser exportChooser = FileChooserBuilder.create()
+						.title(I18n.localize("Export converted text"))
+						.extensionFilters(new ExtensionFilter("Textual File", "*.txt"))
+						.build();
+
+				File exportFile = exportChooser.showSaveDialog(Boot.getStage());
+
+				if(!exportFile.getName().endsWith(".txt"))
+					exportFile = new File(exportFile.getAbsolutePath().concat(".txt"));
+
+				if(!exportFile.exists())
+				{
+					try {
+						exportFile.createNewFile();
+					} catch (Exception e) {
+						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't create file"));
+					}
+				}
+
+				if(exportFile.canWrite()){
+					FileWriter fw = null;
+					try {
+						fw = new FileWriter(exportFile);
+						fw.write(convertTx.getText());
+					} catch (Exception e) {
+						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while writing content into selected file"));
+					} finally{
+						if(fw != null)
+							try {
+								fw.close();
+							} catch (Exception e) {}
+					}
+
+				}else
+					MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't write to selected file"));
+
+
 			}
 		});
 
