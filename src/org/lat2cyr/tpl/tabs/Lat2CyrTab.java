@@ -11,8 +11,14 @@ import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.Converter;
 import org.lat2cyr.utils.Converter.ConvertType;
 import org.lat2cyr.utils.I18n;
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+import com.sun.glass.events.KeyEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -83,7 +89,6 @@ public class Lat2CyrTab extends Tab {
 			public void handle(ActionEvent ae) {
 				if(clip.hasString())
 					sourceTx.setText(clip.getString());
-				sourceTx.setScrollTop(Integer.MAX_VALUE);
 			}
 		});
 
@@ -111,7 +116,6 @@ public class Lat2CyrTab extends Tab {
 			@Override
 			public void handle(ActionEvent ae) {
 				convertTx.setText(converter.convertText(sourceTx.getText(), ConvertType.LAT2CYR));
-				convertTx.setScrollTop(sourceTx.getScrollTop());
 			}
 		});
 
@@ -198,11 +202,22 @@ public class Lat2CyrTab extends Tab {
 							} catch (Exception e) {}
 					}
 
-
 				}else
 					MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't write to selected file"));
+			}
+		});
 
+		sourceTx.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
+				sourceLbl.setText(I18n.localize("Latin").concat(" ( " + newValue.length() + " )"));
+			}
+		});
 
+		convertTx.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
+				convertLbl.setText(I18n.localize("Cyrillic").concat(" ( " + newValue.length() + " )"));
 			}
 		});
 
