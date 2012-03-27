@@ -2,8 +2,9 @@ package org.lat2cyr.tpl.tabs;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import org.lat2cyr.Boot;
 import org.lat2cyr.tpl.MessageBox;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
@@ -11,14 +12,10 @@ import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.Converter;
 import org.lat2cyr.utils.Converter.ConvertType;
 import org.lat2cyr.utils.I18n;
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
-import com.sun.glass.events.KeyEvent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -138,14 +135,17 @@ public class Lat2CyrTab extends Tab {
 					BufferedReader br = null;
 
 					try {
-						br = new BufferedReader(new FileReader(importFile));
+						br = new BufferedReader(new InputStreamReader(new FileInputStream(importFile)));
+
 						String line = null;
 						String text = "";
 
-						while((line = br.readLine()) != null)
-							text = text.concat(line).concat(System.getProperty("line.separator"));
+						String nl = System.getProperty("line.separator", "\n");
 
-						sourceTx.setText(text.trim());
+						while((line = br.readLine()) != null)
+							text += line + nl;
+
+						sourceTx.setText( text.trim() );
 
 					} catch (Exception e) {
 						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while reading content from selected file"));
@@ -207,6 +207,14 @@ public class Lat2CyrTab extends Tab {
 			}
 		});
 
+		toolbar.clearBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent ae) {
+				sourceTx.clear();
+				convertTx.clear();
+			}
+		});
+
 		sourceTx.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
@@ -222,6 +230,5 @@ public class Lat2CyrTab extends Tab {
 		});
 
 	}
-
 
 }

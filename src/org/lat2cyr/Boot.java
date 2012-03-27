@@ -30,7 +30,9 @@ public class Boot extends Application {
         setStage(primaryStage);
         initPrimaryScene();
 
-        primaryStage.setScene(new Scene(new MainPane(), 600, 400));
+        Scene scene = new Scene(new MainPane(), 650, 420);
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

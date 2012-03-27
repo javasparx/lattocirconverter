@@ -14,13 +14,14 @@ public class TabToolbar extends ToolBar {
 	public Button pasteBtn = null;
 	public Button copySourceBtn = null;
 	public Button copyConvertBtn = null;
+	public Button clearBtn = null;
 	public Button convertBtn = null;
 
 	public TabToolbar() {
 
 		initComponents();
 
-		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copySourceBtn, copyConvertBtn, convertBtn);
+		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copySourceBtn, copyConvertBtn, clearBtn, convertBtn);
 	}
 
 	private void initComponents() {
@@ -48,6 +49,11 @@ public class TabToolbar extends ToolBar {
 		copyConvertBtn = ButtonBuilder.create()
 				.text(I18n.localize("Copy Cyrillic"))
 				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/copy.png"))))
+				.build();
+
+		clearBtn = ButtonBuilder.create()
+				.text(I18n.localize("Clear All"))
+				.graphic(new ImageView(new Image(getClass().getResourceAsStream("/org/lat2cyr/resources/icons/clear.png"))))
 				.build();
 
 		convertBtn = ButtonBuilder.create()
