@@ -1,6 +1,8 @@
 package org.lat2cyr.tpl.toolbars;
 
 import org.lat2cyr.utils.I18n;
+
+import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.ToolBar;
@@ -16,10 +18,13 @@ public class TabToolbar extends ToolBar {
 	public Button copyConvertBtn = null;
 	public Button clearBtn = null;
 	public Button convertBtn = null;
+	
+    
 
 	public TabToolbar() {
 
 		initComponents();
+		importBtn.fireEvent(new Event(null));
 
 		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copySourceBtn, copyConvertBtn, clearBtn, convertBtn);
 	}

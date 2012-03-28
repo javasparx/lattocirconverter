@@ -20,6 +20,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Priority;
@@ -30,7 +31,7 @@ import javafx.stage.FileChooserBuilder;
 
 public class Lat2CyrTab extends Tab {
 
-	private TabToolbar toolbar = new TabToolbar();
+	private static TabToolbar toolbar = new TabToolbar();
 	private VBox wrap = new VBox();
 	private VBox pane = new VBox();
 	private Label sourceLbl = new Label();
@@ -46,6 +47,19 @@ public class Lat2CyrTab extends Tab {
 		initActions();
 
 	}
+	
+	
+	public static TabToolbar getToolbar() {
+		return toolbar;
+	}
+
+
+
+	public void setToolbar(TabToolbar toolbar) {
+		this.toolbar = toolbar;
+	}
+
+
 
 	private void initComponents() {
 		this.setText(I18n.localize("Latin to Cyrillic"));
