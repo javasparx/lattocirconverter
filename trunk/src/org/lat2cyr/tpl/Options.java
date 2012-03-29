@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
+import org.lat2cyr.tpl.tabs.Cyr2LatTab;
+import org.lat2cyr.tpl.tabs.Lat2CyrTab;
 import org.lat2cyr.utils.I18n;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,12 +28,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Options extends Stage{
-
+	
 	private GridPane mainPane = new GridPane();
-
-	private Label langLbl = new Label("Language".concat(":"));
+	
+	private Label langLbl = new Label(I18n.localize("Language")+":");
 	private ChoiceBox<String> langChb = new ChoiceBox<String>();
-	private Button okBtn = new Button("Save");
+	private Button okBtn = new Button(I18n.localize("Save"));
 	File optionsFile = new File("options.ini");
 	private Properties props = new Properties();
 
@@ -113,6 +115,61 @@ public class Options extends Stage{
 
 		return _r;
 	}
+	public void doLayoutLanguage(){
+		
+		//Latin2Cyriilic Toolbar translation
+		Lat2CyrTab.getToolbar().convertBtn.setText(I18n.localize("Convert"));
+		Lat2CyrTab.getToolbar().importBtn.setText(I18n.localize("Import"));
+		Lat2CyrTab.getToolbar().exportBtn.setText(I18n.localize("Export"));
+		Lat2CyrTab.getToolbar().copyConvertBtn.setText(I18n.localize("Copy Latin"));
+		Lat2CyrTab.getToolbar().copySourceBtn.setText(I18n.localize("Copy Cyrillic"));
+		Lat2CyrTab.getToolbar().pasteBtn.setText(I18n.localize("Paste"));
+		Lat2CyrTab.getToolbar().clearBtn.setText(I18n.localize("Clear All"));
+		
+		//Menu translation
+		MainPane.getMainMb().fileMn.setText(I18n.localize("File"));
+		MainPane.getMainMb().importMn.setText(I18n.localize("Import"));
+		MainPane.getMainMb().exportMn.setText(I18n.localize("Export"));
+		MainPane.getMainMb().exitMn.setText(I18n.localize("Exit"));
+		MainPane.getMainMb().editMn.setText(I18n.localize("Edit"));
+		MainPane.getMainMb().copyMn.setText(I18n.localize("Copy"));
+		MainPane.getMainMb().copyLatin.setText(I18n.localize("Copy Latin"));
+		MainPane.getMainMb().copyCyrilic.setText(I18n.localize("Copy Cyrillic"));
+		MainPane.getMainMb().pasteMn.setText(I18n.localize("Paste"));
+		MainPane.getMainMb().clearMn.setText(I18n.localize("Clear All"));
+		MainPane.getMainMb().helpMn.setText(I18n.localize("Help"));
+		MainPane.getMainMb().aboutMn.setText(I18n.localize("About"));
+		MainPane.getMainMb().optionsMn.setText(I18n.localize("Options"));
+		
+		//Cyrilic2Latin Toolbar translation
+		Cyr2LatTab.getToolbar().convertBtn.setText(I18n.localize("Convert"));
+		Cyr2LatTab.getToolbar().importBtn.setText(I18n.localize("Import"));
+		Cyr2LatTab.getToolbar().exportBtn.setText(I18n.localize("Export"));
+		Cyr2LatTab.getToolbar().copyConvertBtn.setText(I18n.localize("Copy Latin"));
+		Cyr2LatTab.getToolbar().copySourceBtn.setText(I18n.localize("Copy Cyrillic"));
+		Cyr2LatTab.getToolbar().pasteBtn.setText(I18n.localize("Paste"));
+		Cyr2LatTab.getToolbar().clearBtn.setText(I18n.localize("Clear All"));
+		
+		//Tabs name translation
+		MainPane.getLat2CyrTab().setText(I18n.localize("Latin to Cyrillic"));
+		MainPane.getCyr2LatTab().setText(I18n.localize("Cyrillic to Latin"));
+		
+		//Options dialog translation
+		this.setTitle(I18n.localize("Options"));
+		langLbl.setText(I18n.localize("Language"));
+		okBtn.setText(I18n.localize("Save"));
+		
+		//About dialog translation
+		AboutDialog ad = new AboutDialog();
+		ad.setTitle(I18n.localize("About"));
+		ad.btnClose.setText(I18n.localize("Close"));
+		
+		
+		
+		//MessageBox dialog translation
+		
+	}
+	
 
 	private void makeDefaultOptionsFile() {
 		try {
@@ -137,7 +194,7 @@ public class Options extends Stage{
 		}
 
 		I18n.langReselected = true;
-
+		doLayoutLanguage();
 		this.close();
 		return true;
 	}

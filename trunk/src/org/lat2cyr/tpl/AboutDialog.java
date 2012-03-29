@@ -1,5 +1,7 @@
 package org.lat2cyr.tpl;
 
+import org.lat2cyr.utils.I18n;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -24,12 +26,10 @@ public class AboutDialog extends Stage {
 	//Image icon = new Image("/org/lat2cyr/resources/icons/logo.png");
 	//ImageView imgView = new ImageView();
 	Label lblTitle = new Label("Latin 2 Cyrilic Converter");
-	Label lblVersion = new Label("Version: 1.0");
-	Label lblAuthors  = new Label("Authors: Djordje Zeljic, Zoran Pavlovic");
+	Label lblVersion = new Label(I18n.localize("Version")+": 1.0");
+	Label lblAuthors  = new Label(I18n.localize("Authors")+": Djordje Zeljic, Zoran Pavlovic");
 	Label lblMail = new Label("e-Mail: zeljic@gmail.com, zoranp90@gmail.com");
-	Button btnClose = new Button("Close");
-
-
+	Button btnClose = new Button(I18n.localize("Close"));
 
 	public AboutDialog(){
 
@@ -110,9 +110,9 @@ public class AboutDialog extends Stage {
 
 
 		Scene scene = new Scene(root);
-		this.setTitle("About");
+		this.setTitle(I18n.localize("About"));
 		this.setScene(scene);
-		//this.setResizable(false);
+		this.setResizable(false);
 		this.show();
 
 

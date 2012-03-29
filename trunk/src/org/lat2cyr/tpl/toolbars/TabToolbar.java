@@ -24,7 +24,7 @@ public class TabToolbar extends ToolBar {
 	public TabToolbar() {
 
 		initComponents();
-		importBtn.fireEvent(new Event(null));
+		
 
 		this.getItems().addAll(importBtn ,exportBtn, pasteBtn, copySourceBtn, copyConvertBtn, clearBtn, convertBtn);
 	}

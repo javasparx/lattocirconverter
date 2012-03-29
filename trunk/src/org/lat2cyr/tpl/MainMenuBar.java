@@ -1,32 +1,16 @@
 package org.lat2cyr.tpl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-
-import org.lat2cyr.Boot;
-import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import org.lat2cyr.tpl.tabs.Lat2CyrTab;
-import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.I18n;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooserBuilder;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Window;
 
 public class MainMenuBar extends MenuBar {
 
-	private Tab lat2CyrTab = new Lat2CyrTab();
 	// File menu
 	public Menu fileMn = new Menu(I18n.localize("File"));
 	public MenuItem importMn = new MenuItem(I18n.localize("Import"));
@@ -37,10 +21,10 @@ public class MainMenuBar extends MenuBar {
 	// Edit menu
 	public Menu editMn = new Menu(I18n.localize("Edit"));
 	public Menu copyMn = new Menu(I18n.localize("Copy"));
-	public MenuItem copyLatin = new MenuItem(I18n.localize("Latin text"));
-	public MenuItem copyCyrilic = new MenuItem(I18n.localize("Cyrillic text"));
+	public MenuItem copyLatin = new MenuItem(I18n.localize("Copy Latin"));
+	public MenuItem copyCyrilic = new MenuItem(I18n.localize("Copy Cyrillic"));
 	public MenuItem pasteMn = new MenuItem(I18n.localize("Paste"));
-	public MenuItem clearMn = new MenuItem(I18n.localize("Clear all"));
+	public MenuItem clearMn = new MenuItem(I18n.localize("Clear All"));
 
 	// Help menu
 	public Menu helpMn = new Menu(I18n.localize("Help"));
@@ -140,6 +124,7 @@ public class MainMenuBar extends MenuBar {
 			public void handle(ActionEvent e) {
 				AboutDialog ad = new AboutDialog();
 				ad.open();
+				
 			}
 		});
 
