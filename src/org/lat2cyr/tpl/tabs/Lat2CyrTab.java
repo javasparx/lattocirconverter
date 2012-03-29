@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import org.lat2cyr.Boot;
+import org.lat2cyr.tpl.MainMenuBar;
 import org.lat2cyr.tpl.MessageBox;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import org.lat2cyr.tpl.toolbars.TabToolbar;
@@ -30,7 +31,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.FileChooserBuilder;
 
 public class Lat2CyrTab extends Tab {
-
+		
 	private static TabToolbar toolbar = new TabToolbar();
 	private VBox wrap = new VBox();
 	private VBox pane = new VBox();
@@ -47,6 +48,8 @@ public class Lat2CyrTab extends Tab {
 		initActions();
 
 	}
+	
+
 	
 	
 	public static TabToolbar getToolbar() {

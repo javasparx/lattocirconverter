@@ -30,7 +30,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Cyr2LatTab extends Tab {
 
-	private TabToolbar toolbar = new TabToolbar();
+	private static TabToolbar toolbar = new TabToolbar();
 	private VBox wrap = new VBox();
 	private VBox pane = new VBox();
 	private Label sourceLbl = new Label();
@@ -40,6 +40,9 @@ public class Cyr2LatTab extends Tab {
 	private Clipboard clip = Clipboard.getSystemClipboard();
 	private Converter converter = new Converter();
 
+
+
+	
 	public Cyr2LatTab() {
 
 		initComponents();
@@ -47,6 +50,16 @@ public class Cyr2LatTab extends Tab {
 
 	}
 
+	public static TabToolbar getToolbar() {
+		return toolbar;
+	}
+
+
+
+	public void setToolbar(TabToolbar toolbar) {
+		this.toolbar = toolbar;
+	}
+	
 	private void initComponents() {
 		this.setText(I18n.localize("Cyrillic to Latin"));
 		this.setContent(wrap);
@@ -230,6 +243,10 @@ public class Cyr2LatTab extends Tab {
 		});
 
 	}
+
+
+
+	
 
 
 }

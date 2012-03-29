@@ -2,7 +2,6 @@ package org.lat2cyr.tpl;
 
 import org.lat2cyr.tpl.tabs.Cyr2LatTab;
 import org.lat2cyr.tpl.tabs.Lat2CyrTab;
-
 import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -11,13 +10,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class MainPane extends VBox {
-
-	private MainMenuBar mainMb = new MainMenuBar();
+	
+	private static MainMenuBar mainMb = new MainMenuBar();
 	private TabPane tabPane = new TabPane();
-	private Tab lat2CyrTab = new Lat2CyrTab();
-	private Tab cyr2LatTab = new Cyr2LatTab();
-
-
+	private static Tab lat2CyrTab = new Lat2CyrTab();
+	private static Tab cyr2LatTab = new Cyr2LatTab();
+	
 	public MainPane() {
 
 		// tabpan
@@ -29,7 +27,35 @@ public class MainPane extends VBox {
 		// finally add all components to this component
 		this.getChildren().addAll(mainMb, tabPane);
 		VBox.setVgrow(tabPane, Priority.ALWAYS);
-
+		
 	}
+	
+	public static Tab getCyr2LatTab() {
+		return cyr2LatTab;
+	}
+
+	public void setCyr2LatTab(Tab cyr2LatTab) {
+		this.cyr2LatTab = cyr2LatTab;
+	}
+
+	
+	public static Tab getLat2CyrTab() {
+		return lat2CyrTab;
+	}
+
+	public void setLat2CyrTab(Tab lat2CyrTab) {
+		this.lat2CyrTab = lat2CyrTab;
+	}
+	
+	public static MainMenuBar getMainMb() {
+		return mainMb;
+	}
+
+	public void setMainMb(MainMenuBar mainMb) {
+		this.mainMb = mainMb;
+	
+	}
+
+	
 
 }
