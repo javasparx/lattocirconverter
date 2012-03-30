@@ -1,10 +1,16 @@
 package org.lat2cyr.tpl.tabs;
 
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.util.List;
+
 import org.lat2cyr.Boot;
 import org.lat2cyr.tpl.MainMenuBar;
 import org.lat2cyr.tpl.MessageBox;
@@ -24,6 +30,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -41,12 +50,14 @@ public class Lat2CyrTab extends Tab {
 	private TextArea convertTx = new TextArea();
 	private Clipboard clip = Clipboard.getSystemClipboard();
 	private Converter converter = new Converter();
+	
+	
 
 	public Lat2CyrTab() {
 
 		initComponents();
 		initActions();
-
+		dragDrop();		    
 	}
 	
 
@@ -95,6 +106,7 @@ public class Lat2CyrTab extends Tab {
 		pane.getChildren().add(convertTx);
 		VBox.setVgrow(convertTx, Priority.ALWAYS);
 	}
+	
 
 	private void initActions(){
 
@@ -247,5 +259,52 @@ public class Lat2CyrTab extends Tab {
 		});
 
 	}
+	
+	public void dragDrop(){
+		sourceTx.setOnDragOver(new EventHandler <DragEvent>()  {
+            @Override
+            public void handle(DragEvent event) {
+                           
+                Dragboard db = event.getDragboard();
+                  
+                if(db.hasFiles()){
+                	event.acceptTransferModes(TransferMode.ANY);
+                     
+                    for(File file:db.getFiles()){
+                        String absolutePath = file.getAbsolutePath();
+                        BufferedReader br = null;
+                		try {
+    						br = new BufferedReader(new InputStreamReader(new FileInputStream(absolutePath)));
+
+    						String line = null;
+    						String text = "";
+
+    						String nl = System.getProperty("line.separator", "\n");
+
+    						while((line = br.readLine()) != null)
+    							text += line + nl;
+
+    						sourceTx.setText( text.trim() );
+
+    					} catch (Exception e) {
+    						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while reading content from selected file"));
+    					} finally{
+    						if(br != null)
+    							try {
+    								br.close();
+    							} catch (Exception e) {}
+    					}
+                             
+                    }
+ 
+                }else{
+                    event.setDropCompleted(false);
+                }
+ 
+                event.consume();
+            }
+        });
+	}
+	
 
 }
