@@ -10,6 +10,7 @@ import org.lat2cyr.tpl.MessageBox;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.Converter;
+import org.lat2cyr.utils.DragAndDropManager;
 import org.lat2cyr.utils.Converter.ConvertType;
 import org.lat2cyr.utils.I18n;
 import javafx.beans.value.ChangeListener;
@@ -27,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooserBuilder;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Callback;
 
 public class Cyr2LatTab extends Tab {
 
@@ -40,9 +42,6 @@ public class Cyr2LatTab extends Tab {
 	private Clipboard clip = Clipboard.getSystemClipboard();
 	private Converter converter = new Converter();
 
-
-
-	
 	public Cyr2LatTab() {
 
 		initComponents();
@@ -54,12 +53,10 @@ public class Cyr2LatTab extends Tab {
 		return toolbar;
 	}
 
-
-
 	public void setToolbar(TabToolbar toolbar) {
-		this.toolbar = toolbar;
+		Cyr2LatTab.toolbar = toolbar;
 	}
-	
+
 	private void initComponents() {
 		this.setText(I18n.localize("Cyrillic to Latin"));
 		this.setContent(wrap);
@@ -231,22 +228,31 @@ public class Cyr2LatTab extends Tab {
 		sourceTx.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
-				sourceLbl.setText(I18n.localize("Cyrillic").concat(" ( " + newValue.length() + " )"));
+				if(newValue.length() > 0)
+					sourceLbl.setText(I18n.localize("Cyrillic").concat(" (" + newValue.length() + ")"));
+				else
+					sourceLbl.setText(I18n.localize("Cyrillic"));
 			}
 		});
 
 		convertTx.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
-				convertLbl.setText(I18n.localize("Latin").concat(" ( " + newValue.length() + " )"));
+				if(newValue.length() > 0)
+					convertLbl.setText(I18n.localize("Latin").concat(" (" + newValue.length() + ")"));
+				else
+					convertLbl.setText(I18n.localize("Latin"));
+			}
+		});
+
+		DragAndDropManager.getInstance().setImport(sourceTx, new Callback<String, String>() {
+			@Override
+			public String call(String text) {
+				sourceTx.setText(text);
+				return text;
 			}
 		});
 
 	}
-
-
-
-	
-
 
 }
