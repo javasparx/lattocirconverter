@@ -1,8 +1,6 @@
 package org.lat2cyr.tpl.toolbars;
 
 import org.lat2cyr.utils.I18n;
-
-import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBuilder;
 import javafx.scene.control.ToolBar;

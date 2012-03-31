@@ -1,22 +1,13 @@
 package org.lat2cyr.tpl.tabs;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDropEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.util.List;
-
 import org.lat2cyr.Boot;
-import org.lat2cyr.tpl.MainMenuBar;
 import org.lat2cyr.tpl.MessageBox;
 import org.lat2cyr.tpl.MessageBox.MessageBoxType;
 import org.lat2cyr.tpl.toolbars.TabToolbar;
 import org.lat2cyr.utils.Converter;
+import org.lat2cyr.utils.DragAndDropManager;
+import org.lat2cyr.utils.FileManager;
 import org.lat2cyr.utils.Converter.ConvertType;
 import org.lat2cyr.utils.I18n;
 import javafx.beans.value.ChangeListener;
@@ -27,20 +18,17 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.ToolBar;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.FileChooserBuilder;
+import javafx.util.Callback;
 
 public class Lat2CyrTab extends Tab {
-		
+
 	private static TabToolbar toolbar = new TabToolbar();
 	private VBox wrap = new VBox();
 	private VBox pane = new VBox();
@@ -50,30 +38,21 @@ public class Lat2CyrTab extends Tab {
 	private TextArea convertTx = new TextArea();
 	private Clipboard clip = Clipboard.getSystemClipboard();
 	private Converter converter = new Converter();
-	
-	
 
 	public Lat2CyrTab() {
 
 		initComponents();
 		initActions();
-		dragDrop();		    
-	}
-	
 
-	
-	
+	}
+
 	public static TabToolbar getToolbar() {
 		return toolbar;
 	}
 
-
-
 	public void setToolbar(TabToolbar toolbar) {
-		this.toolbar = toolbar;
+		Lat2CyrTab.toolbar = toolbar;
 	}
-
-
 
 	private void initComponents() {
 		this.setText(I18n.localize("Latin to Cyrillic"));
@@ -106,7 +85,6 @@ public class Lat2CyrTab extends Tab {
 		pane.getChildren().add(convertTx);
 		VBox.setVgrow(convertTx, Priority.ALWAYS);
 	}
-	
 
 	private void initActions(){
 
@@ -159,34 +137,11 @@ public class Lat2CyrTab extends Tab {
 				if(importFile == null)
 					return;
 
-				if(importFile.exists() && importFile.canRead()){
-
-					BufferedReader br = null;
-
-					try {
-						br = new BufferedReader(new InputStreamReader(new FileInputStream(importFile)));
-
-						String line = null;
-						String text = "";
-
-						String nl = System.getProperty("line.separator", "\n");
-
-						while((line = br.readLine()) != null)
-							text += line + nl;
-
-						sourceTx.setText( text.trim() );
-
-					} catch (Exception e) {
-						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while reading content from selected file"));
-					} finally{
-						if(br != null)
-							try {
-								br.close();
-							} catch (Exception e) {}
-					}
-
-				}else
-					MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't read selected file"));
+				try {
+					sourceTx.setText(FileManager.getInstance().importFile(importFile));
+				} catch (Exception e) {
+					MessageBox.show(MessageBoxType.ERROR, "Import file", e.getMessage());
+				}
 
 			}
 		});
@@ -208,31 +163,12 @@ public class Lat2CyrTab extends Tab {
 				if(!exportFile.getName().endsWith(".txt"))
 					exportFile = new File(exportFile.getAbsolutePath().concat(".txt"));
 
-				if(!exportFile.exists())
-				{
-					try {
-						exportFile.createNewFile();
-					} catch (Exception e) {
-						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't create file"));
-					}
+				try{
+					FileManager.getInstance().exportFile(exportFile, convertTx.getText());
+				}catch (Exception e) {
+					MessageBox.show(MessageBoxType.ERROR, "Export File", e.getMessage());
 				}
 
-				if(exportFile.canWrite()){
-					FileWriter fw = null;
-					try {
-						fw = new FileWriter(exportFile);
-						fw.write(convertTx.getText());
-					} catch (Exception e) {
-						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while writing content into selected file"));
-					} finally{
-						if(fw != null)
-							try {
-								fw.close();
-							} catch (Exception e) {}
-					}
-
-				}else
-					MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Can't write to selected file"));
 			}
 		});
 
@@ -247,64 +183,29 @@ public class Lat2CyrTab extends Tab {
 		sourceTx.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
-				sourceLbl.setText(I18n.localize("Latin").concat(" ( " + newValue.length() + " )"));
+				if(newValue.length() > 0)
+					sourceLbl.setText(I18n.localize("Latin").concat(" (" + newValue.length() + ")"));
+				else
+					sourceLbl.setText(I18n.localize("Latin"));
 			}
 		});
 
 		convertTx.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observe, String oldValue, String newValue) {
-				convertLbl.setText(I18n.localize("Cyrillic").concat(" ( " + newValue.length() + " )"));
+				if(newValue.length() > 0)
+					convertLbl.setText(I18n.localize("Cyrillic").concat(" (" + newValue.length() + ")"));
+				else
+					convertLbl.setText(I18n.localize("Cyrillic"));
 			}
 		});
 
+		DragAndDropManager.getInstance().setImport(sourceTx, new Callback<String, String>() {
+			@Override
+			public String call(String text) {
+				sourceTx.setText(text);
+				return text;
+			}
+		});
 	}
-	
-	public void dragDrop(){
-		sourceTx.setOnDragOver(new EventHandler <DragEvent>()  {
-            @Override
-            public void handle(DragEvent event) {
-                           
-                Dragboard db = event.getDragboard();
-                  
-                if(db.hasFiles()){
-                	event.acceptTransferModes(TransferMode.ANY);
-                     
-                    for(File file:db.getFiles()){
-                        String absolutePath = file.getAbsolutePath();
-                        BufferedReader br = null;
-                		try {
-    						br = new BufferedReader(new InputStreamReader(new FileInputStream(absolutePath)));
-
-    						String line = null;
-    						String text = "";
-
-    						String nl = System.getProperty("line.separator", "\n");
-
-    						while((line = br.readLine()) != null)
-    							text += line + nl;
-
-    						sourceTx.setText( text.trim() );
-
-    					} catch (Exception e) {
-    						MessageBox.show(MessageBoxType.ERROR, I18n.localize("File Error"), I18n.localize("Error while reading content from selected file"));
-    					} finally{
-    						if(br != null)
-    							try {
-    								br.close();
-    							} catch (Exception e) {}
-    					}
-                             
-                    }
- 
-                }else{
-                    event.setDropCompleted(false);
-                }
- 
-                event.consume();
-            }
-        });
-	}
-	
-
 }

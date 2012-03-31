@@ -35,7 +35,7 @@ public class MainPane extends VBox {
 	}
 
 	public void setCyr2LatTab(Tab cyr2LatTab) {
-		this.cyr2LatTab = cyr2LatTab;
+		MainPane.cyr2LatTab = cyr2LatTab;
 	}
 
 	
@@ -44,7 +44,7 @@ public class MainPane extends VBox {
 	}
 
 	public void setLat2CyrTab(Tab lat2CyrTab) {
-		this.lat2CyrTab = lat2CyrTab;
+		MainPane.lat2CyrTab = lat2CyrTab;
 	}
 	
 	public static MainMenuBar getMainMb() {
@@ -52,7 +52,7 @@ public class MainPane extends VBox {
 	}
 
 	public void setMainMb(MainMenuBar mainMb) {
-		this.mainMb = mainMb;
+		MainPane.mainMb = mainMb;
 	
 	}
 
