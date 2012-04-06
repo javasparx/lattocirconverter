@@ -30,6 +30,7 @@ public class MainMenuBar extends MenuBar {
 	public Menu helpMn = new Menu(I18n.localize("Help"));
 	public MenuItem optionsMn = new MenuItem(I18n.localize("Options"));
 	public MenuItem aboutMn = new MenuItem(I18n.localize("About"));
+	public MenuItem helpContentsMn = new MenuItem("Help Contents");
 
 	public MainMenuBar() {
 
@@ -43,7 +44,7 @@ public class MainMenuBar extends MenuBar {
 		editMn.getItems().addAll(copyMn, pasteMn, clearMn);
 
 		// Adding components to Help menu
-		helpMn.getItems().addAll(optionsMn, new SeparatorMenuItem(), aboutMn);
+		helpMn.getItems().addAll(helpContentsMn, optionsMn, new SeparatorMenuItem(), aboutMn );
 
 		// Adding File, Edit, Help menu to MenuBar
 		this.getMenus().add(fileMn);
@@ -124,6 +125,15 @@ public class MainMenuBar extends MenuBar {
 			public void handle(ActionEvent e) {
 				AboutDialog ad = new AboutDialog();
 				ad.open();
+				
+			}
+		});
+		
+		helpContentsMn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				HelpContents hc = new HelpContents();
+				hc.open();
 				
 			}
 		});
