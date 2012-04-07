@@ -28,13 +28,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Options extends Stage{
-	
+
 	private GridPane mainPane = new GridPane();
-	
+
 	private Label langLbl = new Label(I18n.localize("Language")+":");
 	private ChoiceBox<String> langChb = new ChoiceBox<String>();
 	private Button okBtn = new Button(I18n.localize("Save"));
-	File optionsFile = new File("options.ini");
+	private File optionsFile = new File("options.ini");
 	private Properties props = new Properties();
 
 	public void open(){
@@ -116,7 +116,7 @@ public class Options extends Stage{
 		return _r;
 	}
 	public void doLayoutLanguage(){
-		
+
 		//Latin2Cyriilic Toolbar translation
 		Lat2CyrTab.getToolbar().convertBtn.setText(I18n.localize("Convert"));
 		Lat2CyrTab.getToolbar().importBtn.setText(I18n.localize("Import"));
@@ -125,7 +125,7 @@ public class Options extends Stage{
 		Lat2CyrTab.getToolbar().copySourceBtn.setText(I18n.localize("Copy Cyrillic"));
 		Lat2CyrTab.getToolbar().pasteBtn.setText(I18n.localize("Paste"));
 		Lat2CyrTab.getToolbar().clearBtn.setText(I18n.localize("Clear All"));
-		
+
 		//Menu translation
 		MainPane.getMainMb().fileMn.setText(I18n.localize("File"));
 		MainPane.getMainMb().importMn.setText(I18n.localize("Import"));
@@ -140,7 +140,7 @@ public class Options extends Stage{
 		MainPane.getMainMb().helpMn.setText(I18n.localize("Help"));
 		MainPane.getMainMb().aboutMn.setText(I18n.localize("About"));
 		MainPane.getMainMb().optionsMn.setText(I18n.localize("Options"));
-		
+
 		//Cyrilic2Latin Toolbar translation
 		Cyr2LatTab.getToolbar().convertBtn.setText(I18n.localize("Convert"));
 		Cyr2LatTab.getToolbar().importBtn.setText(I18n.localize("Import"));
@@ -149,27 +149,27 @@ public class Options extends Stage{
 		Cyr2LatTab.getToolbar().copySourceBtn.setText(I18n.localize("Copy Cyrillic"));
 		Cyr2LatTab.getToolbar().pasteBtn.setText(I18n.localize("Paste"));
 		Cyr2LatTab.getToolbar().clearBtn.setText(I18n.localize("Clear All"));
-		
+
 		//Tabs name translation
 		MainPane.getLat2CyrTab().setText(I18n.localize("Latin to Cyrillic"));
 		MainPane.getCyr2LatTab().setText(I18n.localize("Cyrillic to Latin"));
-		
+
 		//Options dialog translation
 		this.setTitle(I18n.localize("Options"));
 		langLbl.setText(I18n.localize("Language"));
 		okBtn.setText(I18n.localize("Save"));
-		
+
 		//About dialog translation
 		AboutDialog ad = new AboutDialog();
 		ad.setTitle(I18n.localize("About"));
 		ad.btnClose.setText(I18n.localize("Close"));
-		
-		
-		
+
+
+
 		//MessageBox dialog translation
-		
+
 	}
-	
+
 
 	private void makeDefaultOptionsFile() {
 		try {
