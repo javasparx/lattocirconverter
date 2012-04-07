@@ -1,6 +1,7 @@
 package org.lat2cyr;
 
 import org.lat2cyr.tpl.MainPane;
+import org.lat2cyr.utils.I18n;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,18 +11,18 @@ import javafx.stage.Stage;
  */
 public class Boot extends Application {
 
-    private static Stage primaryStage = null;
+    private static Stage _instance = null;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     public static Stage getStage(){
-    	return primaryStage;
+    	return _instance;
     }
 
     private static void setStage(Stage stage){
-    	primaryStage = stage;
+    	_instance = stage;
     }
 
     @Override
@@ -37,8 +38,8 @@ public class Boot extends Application {
     }
 
     private void initPrimaryScene() {
-        Boot.primaryStage.setTitle("Lat2Cyr Converter");
-        Boot.primaryStage.setResizable(true);
+        Boot._instance.setTitle(I18n.localize("Latin to Cyrillic Converter"));
+        Boot._instance.setResizable(true);
     }
 
 }
