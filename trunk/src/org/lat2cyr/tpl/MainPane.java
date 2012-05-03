@@ -3,6 +3,7 @@ package org.lat2cyr.tpl;
 import org.lat2cyr.tpl.tabs.Cyr2LatTab;
 import org.lat2cyr.tpl.tabs.Lat2CyrTab;
 import javafx.geometry.Side;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
@@ -15,6 +16,8 @@ public class MainPane extends VBox {
 	private TabPane tabPane = new TabPane();
 	private static Tab lat2CyrTab = new Lat2CyrTab();
 	private static Tab cyr2LatTab = new Cyr2LatTab();
+	private static Label sourceLbl = new Label();
+	private Label convertLbl = new Label();
 	
 	public MainPane() {
 
@@ -54,6 +57,22 @@ public class MainPane extends VBox {
 	public void setMainMb(MainMenuBar mainMb) {
 		MainPane.mainMb = mainMb;
 	
+	}
+	
+	public Label getConvertLbl() {
+		return convertLbl;
+	}
+
+	public void setConvertLbl(Label convertLbl) {
+		this.convertLbl = convertLbl;
+	}
+
+	public static Label getSourceLbl() {
+		return sourceLbl;
+	}
+
+	public static void setSourceLbl(Label sourceLbl) {
+		MainPane.sourceLbl = sourceLbl;
 	}
 
 	

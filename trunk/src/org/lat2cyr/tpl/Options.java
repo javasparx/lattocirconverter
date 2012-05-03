@@ -125,11 +125,19 @@ public class Options extends Stage{
 		Lat2CyrTab.getToolbar().copySourceBtn.setText(I18n.localize("Copy Cyrillic"));
 		Lat2CyrTab.getToolbar().pasteBtn.setText(I18n.localize("Paste"));
 		Lat2CyrTab.getToolbar().clearBtn.setText(I18n.localize("Clear All"));
-
+		
+		//Source and Convert labels translation
+		//Pretpostavljam da ovo nije dobar nacin, ali ne znam kako drugacije. :)
+		((Lat2CyrTab) MainPane.getLat2CyrTab()).getSourceLbl().setText(I18n.localize("Latin"));
+		((Lat2CyrTab) MainPane.getLat2CyrTab()).getConvertLbl().setText(I18n.localize("Cyrillic"));
+		((Cyr2LatTab) MainPane.getCyr2LatTab()).getSourceLbl().setText(I18n.localize("Latin"));
+		((Cyr2LatTab) MainPane.getCyr2LatTab()).getConvertLbl().setText(I18n.localize("Cyrillic"));
+		
 		//Menu translation
 		MainPane.getMainMb().fileMn.setText(I18n.localize("File"));
 		MainPane.getMainMb().importMn.setText(I18n.localize("Import"));
 		MainPane.getMainMb().exportMn.setText(I18n.localize("Export"));
+		MainPane.getMainMb().convertMn.setText(I18n.localize("Convert"));
 		MainPane.getMainMb().exitMn.setText(I18n.localize("Exit"));
 		MainPane.getMainMb().editMn.setText(I18n.localize("Edit"));
 		MainPane.getMainMb().copyMn.setText(I18n.localize("Copy"));
@@ -138,6 +146,7 @@ public class Options extends Stage{
 		MainPane.getMainMb().pasteMn.setText(I18n.localize("Paste"));
 		MainPane.getMainMb().clearMn.setText(I18n.localize("Clear All"));
 		MainPane.getMainMb().helpMn.setText(I18n.localize("Help"));
+		MainPane.getMainMb().helpContentsMn.setText(I18n.localize("Help Contents"));
 		MainPane.getMainMb().aboutMn.setText(I18n.localize("About"));
 		MainPane.getMainMb().optionsMn.setText(I18n.localize("Options"));
 
@@ -163,6 +172,12 @@ public class Options extends Stage{
 		AboutDialog ad = new AboutDialog();
 		ad.setTitle(I18n.localize("About"));
 		ad.btnClose.setText(I18n.localize("Close"));
+		
+		HelpContents hp = new HelpContents();
+		hp.lblDetails.setText(I18n.localize("Details:"));
+		hp.lblHeader.setText(I18n.localize("Help Contents"));
+		hp.btnClose.setText(I18n.localize("Close"));
+		hp.lblTitle.setText(I18n.localize("Contents:"));
 
 
 

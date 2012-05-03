@@ -81,13 +81,12 @@ public class AboutDialog extends Stage {
 		//Reflection and adding reflection to ROOT
 		Reflection r = new Reflection();
 		r.setFraction(0.1);
-		//root.setEffect(r);
+		border.setEffect(r);
 
 		btnClose.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				close();
-				System.out.println("What?");
-			}
+				}
 		});
 
 		//Add VBOX on left side of BorderPane
