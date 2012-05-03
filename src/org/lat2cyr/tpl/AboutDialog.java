@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,8 +22,6 @@ import javafx.stage.Stage;
 
 public class AboutDialog extends Stage {
 
-	//Image icon = new Image("/org/lat2cyr/resources/icons/logo.png");
-	//ImageView imgView = new ImageView();
 	Label lblTitle = new Label("Latin 2 Cyrilic Converter");
 	Label lblVersion = new Label(I18n.localize("Version")+": 1.0");
 	Label lblAuthors  = new Label(I18n.localize("Authors")+": Djordje Zeljic, Zoran Pavlovic");
@@ -36,8 +33,6 @@ public class AboutDialog extends Stage {
 	}
 
 	public void open(){
-
-		Group root = new Group();
 
 		//Adding BorderPane
 		BorderPane border = new BorderPane();
@@ -59,7 +54,6 @@ public class AboutDialog extends Stage {
 		ds.setOffsetX(3.0);
 		ds.setColor(Color.GRAY);
 
-
 		//Logo image
 		Image image = new Image("src/org/lat2cyr/resources/icons/logo.png");
 		ImageView iv1 = new ImageView();
@@ -67,7 +61,6 @@ public class AboutDialog extends Stage {
 
 		//Adding  ImageView to VBOX
 		vbox.getChildren().add(iv1);
-
 
 		//GridPane components
 		GridPane.setMargin(lblTitle, new Insets(0, 50, 0, 50));
@@ -88,7 +81,7 @@ public class AboutDialog extends Stage {
 		//Reflection and adding reflection to ROOT
 		Reflection r = new Reflection();
 		r.setFraction(0.1);
-		root.setEffect(r);
+		//root.setEffect(r);
 
 		btnClose.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -103,21 +96,12 @@ public class AboutDialog extends Stage {
 		//Add GridPane to center of BorderPane
 		border.setCenter(gridPane);
 
-		//Add VBOX, BorderPane and GridPane to ROOT
-		root.getChildren().add(gridPane);
-		root.getChildren().add(vbox);
-		root.getChildren().add(border);
-
-
-		Scene scene = new Scene(root);
+	
+		Scene scene = new Scene(border);
 		this.setTitle(I18n.localize("About"));
 		this.setScene(scene);
 		this.setResizable(false);
 		this.show();
-
-
-
-
 
 	}
 
