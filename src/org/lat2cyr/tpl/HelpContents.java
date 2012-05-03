@@ -24,14 +24,14 @@ import javafx.stage.Stage;
 public class HelpContents extends Stage {
 	
 	ListView<String> list = new ListView<String>();
-	Label lblHeader = new Label("Help Contents");
-	Label lblTitle = new Label("Contents:");
-	Label lblDetails = new Label("Details:");
+	Label lblHeader = new Label(I18n.localize("Help Contents"));
+	Label lblTitle = new Label(I18n.localize("Contents:"));
+	Label lblDetails = new Label(I18n.localize("Details:"));
 	Button btnClose = new Button(I18n.localize("Close"));
 	TextArea txtContent = new TextArea();
 	Image image = new Image("src/org/lat2cyr/resources/icons/help.png");
 	ObservableList<String> data = FXCollections.observableArrayList(
-            "Convert", "Import", "Export", "Drag and Drop", "Copy Latin", "Copy Cyrilic", "About", "Exit");
+			I18n.localize("Convert"), I18n.localize("Import"), I18n.localize("Export"), I18n.localize("Drag and Drop"), I18n.localize("Copy Latin"), I18n.localize("Copy Cyrillic"), I18n.localize("About"), I18n.localize("Exit"));
 	String str = null;
 	
 	public HelpContents(){

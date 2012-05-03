@@ -36,6 +36,22 @@ public class Cyr2LatTab extends Tab {
 	private VBox wrap = new VBox();
 	private VBox pane = new VBox();
 	private Label sourceLbl = new Label();
+	public Label getSourceLbl() {
+		return sourceLbl;
+	}
+
+	public void setSourceLbl(Label sourceLbl) {
+		this.sourceLbl = sourceLbl;
+	}
+
+	public Label getConvertLbl() {
+		return convertLbl;
+	}
+
+	public void setConvertLbl(Label convertLbl) {
+		this.convertLbl = convertLbl;
+	}
+
 	private TextArea sourceTx = new TextArea();
 	private Label convertLbl = new Label();
 	private TextArea convertTx = new TextArea();

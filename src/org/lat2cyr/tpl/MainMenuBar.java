@@ -30,7 +30,7 @@ public class MainMenuBar extends MenuBar {
 	public Menu helpMn = new Menu(I18n.localize("Help"));
 	public MenuItem optionsMn = new MenuItem(I18n.localize("Options"));
 	public MenuItem aboutMn = new MenuItem(I18n.localize("About"));
-	public MenuItem helpContentsMn = new MenuItem("Help Contents");
+	public MenuItem helpContentsMn = new MenuItem(I18n.localize("Help Contents"));
 
 	public MainMenuBar() {
 

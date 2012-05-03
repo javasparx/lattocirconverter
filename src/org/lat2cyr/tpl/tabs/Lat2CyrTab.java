@@ -45,6 +45,22 @@ public class Lat2CyrTab extends Tab {
 		initActions();
 
 	}
+	
+	public Label getSourceLbl() {
+		return sourceLbl;
+	}
+
+	public void setSourceLbl(Label sourceLbl) {
+		this.sourceLbl = sourceLbl;
+	}
+
+	public Label getConvertLbl() {
+		return convertLbl;
+	}
+
+	public void setConvertLbl(Label convertLbl) {
+		this.convertLbl = convertLbl;
+	}
 
 	public static TabToolbar getToolbar() {
 		return toolbar;
